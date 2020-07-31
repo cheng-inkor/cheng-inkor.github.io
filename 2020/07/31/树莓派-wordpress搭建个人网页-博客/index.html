@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20200731224348894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2020073122440817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-07-31T14:20:07.000Z">
-<meta property="article:modified_time" content="2020-07-31T14:54:21.293Z">
+<meta property="article:modified_time" content="2020-07-31T14:58:33.832Z">
 <meta property="article:author" content="墨客的个人站">
 <meta property="article:tag" content="教程">
 <meta name="twitter:card" content="summary">
@@ -180,11 +180,6 @@
 
         
         
-        <!-- 不蒜子统计 -->
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
 <a href="/2020/07/31/%E6%A0%91%E8%8E%93%E6%B4%BE-wordpress%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5-%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
   	<time datetime="2020-07-31T14:20:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-31</time>
 </a>
@@ -195,7 +190,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="0-引言（碎碎念）"><a href="#0-引言（碎碎念）" class="headerlink" title="0.引言（碎碎念）"></a>0.引言（碎碎念）</h2><p>本人在几周之前购买了一个树莓派进行学习，之后也萌生了用树莓派搭建一个自己的个人博客的想法，寻思着既能学到东西，以后也能将学习过程中踩的坑在博客里记录下来，一举两得，于是一开始便使用wordpress来搭建，在踩了许多坑后，终于搭建好了，但在使用过程中发现搭建的博客并没有达到我想要的效果，在经过一段时间的搜索后，发现使用hexo框架来搭建博客更能满足我的要求，于是又使用hexo搭建了一个全新的博客，使用hexo和wordpress搭建博客在我看来最大的区别就是，wordpress搭建的博客需要你的服务器24小时在线，否则你的博客就无法访问，而使用hexo搭建网站，由于它是在你的github库里生成静态网页，所以不需要你的服务器24小时在线也能正常访问，相当于github提供了一个免费的服务器。虽然个人更加喜欢hexo一点，但是好歹wordpress也踩了这么多坑，就写一份详细的教程吧，起码wordpress除了能搭博客之外，还能建其他网页嘛。想使用hexo搭博客的小伙伴可以看我的下一篇博客</p>
-<h2 id="1-安装LNMP四件套"><a href="#1-安装LNMP四件套" class="headerlink" title="1.安装LNMP四件套"></a>1.安装LNMP四件套</h2><p>在使用wordpress之前，我们需要先在你的数码派上将LNMP四件套安装完成，LNMP即为Linux、Nginx、MaraiDB（MySQL）、PHP，这也就意味这除了树莓派我们还可以使用其他运行着Linux系统的设备。本文基于树莓派进行搭建，如果你使用的不是树莓派可能有些地方有出入，不过都是大同小异的，稍加修改即可。<br>打开命令行，依次输入下列命令</p>
+<h2 id="1-安装LNMP四件套"><a href="#1-安装LNMP四件套" class="headerlink" title="1.安装LNMP四件套"></a>1.安装LNMP四件套</h2><a id="more"></a>
+<p>在使用wordpress之前，我们需要先在你的数码派上将LNMP四件套安装完成，LNMP即为Linux、Nginx、MaraiDB（MySQL）、PHP，这也就意味这除了树莓派我们还可以使用其他运行着Linux系统的设备。本文基于树莓派进行搭建，如果你使用的不是树莓派可能有些地方有出入，不过都是大同小异的，稍加修改即可。<br>打开命令行，依次输入下列命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nginx        <span class="comment">#安装Nginx</span></span><br><span class="line">sudo apt install php7.3	      <span class="comment">#安装PHP及相关应用，可能你安装的时候7.3</span></span><br></pre></td></tr></table></figure>
 
 <p>已经不是最新版了，百度一下最新版然后修改版本号即可</p>
@@ -481,17 +477,6 @@
       	</div>
     </div>
   </div>
-
-    <!-- 不蒜子统计 -->
-    <span id="busuanzi_container_site_pv">
-            本站总访问量<span id="busuanzi_value_site_pv"></span>次
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-            本站访客数<span id="busuanzi_value_site_uv"></span>人
-    </span>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-    </script>
 
 </footer>
 

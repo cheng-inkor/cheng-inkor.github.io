@@ -177,84 +177,10 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h2 id="0-引言（碎碎念）"><a href="#0-引言（碎碎念）" class="headerlink" title="0.引言（碎碎念）"></a>0.引言（碎碎念）</h2><p>本人在几周之前购买了一个树莓派进行学习，之后也萌生了用树莓派搭建一个自己的个人博客的想法，寻思着既能学到东西，以后也能将学习过程中踩的坑在博客里记录下来，一举两得，于是一开始便使用wordpress来搭建，在踩了许多坑后，终于搭建好了，但在使用过程中发现搭建的博客并没有达到我想要的效果，在经过一段时间的搜索后，发现使用hexo框架来搭建博客更能满足我的要求，于是又使用hexo搭建了一个全新的博客，使用hexo和wordpress搭建博客在我看来最大的区别就是，wordpress搭建的博客需要你的服务器24小时在线，否则你的博客就无法访问，而使用hexo搭建网站，由于它是在你的github库里生成静态网页，所以不需要你的服务器24小时在线也能正常访问，相当于github提供了一个免费的服务器。虽然个人更加喜欢hexo一点，但是好歹wordpress也踩了这么多坑，就写一份详细的教程吧，起码wordpress除了能搭博客之外，还能建其他网页嘛。想使用hexo搭博客的小伙伴可以看我的下一篇博客</p>
-<h2 id="1-安装LNMP四件套"><a href="#1-安装LNMP四件套" class="headerlink" title="1.安装LNMP四件套"></a>1.安装LNMP四件套</h2><p>在使用wordpress之前，我们需要先在你的数码派上将LNMP四件套安装完成，LNMP即为Linux、Nginx、MaraiDB（MySQL）、PHP，这也就意味这除了树莓派我们还可以使用其他运行着Linux系统的设备。本文基于树莓派进行搭建，如果你使用的不是树莓派可能有些地方有出入，不过都是大同小异的，稍加修改即可。<br>打开命令行，依次输入下列命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install nginx        <span class="comment">#安装Nginx</span></span><br><span class="line">sudo apt install php7.3	      <span class="comment">#安装PHP及相关应用，可能你安装的时候7.3</span></span><br></pre></td></tr></table></figure>
-
-<p>已经不是最新版了，百度一下最新版然后修改版本号即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install php7.3-fpm</span><br><span class="line">sudo apt install php7.3-mysql</span><br><span class="line">sudo apt install php7.3-common</span><br><span class="line">sudo apt install mariadb-server     <span class="comment">#安装MaraiDB</span></span><br></pre></td></tr></table></figure>
-
-<p>之后我们需要对我们的Nginx进行一些简单的配置，输入下列命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/nginx/sites-available/default</span><br></pre></td></tr></table></figure>
-
-<p>找到和下面相对应的部分并用下面的将原部分覆盖</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># Default server configuration</span><br><span class="line">#</span><br><span class="line">server &#123;</span><br><span class="line">        <span class="built_in">listen</span> <span class="number">80</span> default_server;</span><br><span class="line">        <span class="built_in">listen</span> [::]:<span class="number">80</span> default_server;</span><br><span class="line"> </span><br><span class="line">        root /var/www/html;</span><br><span class="line"> </span><br><span class="line">        # Add index.php to the <span class="built_in">list</span> <span class="keyword">if</span> you are <span class="keyword">using</span> PHP</span><br><span class="line">        index index.html index.htm index.nginx-debian.html index.php;</span><br><span class="line"> </span><br><span class="line">        server_name _;</span><br><span class="line"> </span><br><span class="line">        location / &#123;</span><br><span class="line">                 # First attempt to serve request as file, then</span><br><span class="line">                 <span class="meta"># as directory, then fall back to displaying a 404.</span></span><br><span class="line">                 try_files $uri $uri/ =<span class="number">404</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="meta"># pass PHP scripts to FastCGI server</span></span><br><span class="line">        #</span><br><span class="line">        location ~ \.php$ &#123;</span><br><span class="line">                 <span class="meta"># <span class="meta-keyword">include</span> snippets/fastcgi-php.conf;</span></span><br><span class="line">                 #</span><br><span class="line">                 # # With php-fpm (<span class="keyword">or</span> other unix sockets):</span><br><span class="line">                 fastcgi_pass unix:/<span class="built_in">run</span>/php/php7<span class="number">.3</span>-fpm.sock;</span><br><span class="line">                 # # With php-cgi (<span class="keyword">or</span> other tcp sockets):</span><br><span class="line">                 # fastcgi_pass <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9000</span>;</span><br><span class="line">                 # 设置脚本文件请求的路径</span><br><span class="line">                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</span><br><span class="line">                 # 引入fastcgi的配置文件 </span><br><span class="line">                 include fastcgi_params;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Ctrl+O保存文档，Ctrl+X退出<br>输入下列命令重启服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo /etc/init.d/nginx restart</span><br><span class="line">sudo /etc/init.d/php7.3-fpm restart</span><br></pre></td></tr></table></figure>
-
-<p>两次均出现OK即表示重启成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service mariadb restart    <span class="comment">#输入这两行命令无任何提示是正常现象</span></span><br><span class="line">sudo service nginx restart</span><br></pre></td></tr></table></figure>
-
-<p>接着输入下列命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 777 /var/            <span class="comment">#下面三行给文件授予权限</span></span><br><span class="line">sudo chmod 777 /var/www</span><br><span class="line">sudo chmod 777 /var/www/html</span><br><span class="line"><span class="built_in">cd</span> /var/www/html                <span class="comment">#该文件夹下为网站根目录</span></span><br><span class="line">sudo nano index.php             <span class="comment">#新建PHP文件进行测试</span></span><br></pre></td></tr></table></figure>
-
-<p>在index.php中输入<strong><?php phpinfo(); ?></strong>，保存后退出，在浏览器中输入<strong>你的树莓派ip/index.php</strong>，如果看到了下图的phpinfo 信息，说明php和nginx配置成功<br><img src="https://img-blog.csdnimg.cn/20200731223805110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt="我的phpinfo信息"></p>
-<p>接下来我们还需要安装phpMyAdmin</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install phpmyadmin</span><br></pre></td></tr></table></figure>
-<p><img src="https://img-blog.csdnimg.cn/20200731223848547.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt="安装过程中会出现该对话框，选择第一个按回车即可"><br>出现第二个对话款选择YES即可，之后会再弹出个对话框让你输入密码，输入完成后选择ok，然后再输入一遍密码即可（这个密码是之后登录phpmyadmin要用的，务必牢记，同时也要注意大小写）<br>安装完成后还需要把phpmyadmin 连接到 nginx服务器的php根目录上，用下面这个命令来建立软连接</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/share/phpmyadmin /var/www/html</span><br></pre></td></tr></table></figure>
-<p>完成后在浏览器内输入<strong>你的树莓派ip/phpmyadmin</strong>，出现下方图片即说明配置成功<br><img src="https://img-blog.csdnimg.cn/2020073122391735.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>但是我们不能直接使用，因为我们目前的数据库用户是没有权限的，所以我们还需要创建一个有权限的数据库用户<br>回到命令行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql -u root -p     <span class="comment">#进入mariaDB环境，第一次登陆是没有密码的，直接按回车即可</span></span><br></pre></td></tr></table></figure>
-
-<p>输入下列命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER <span class="string">'name'</span>@<span class="string">' localhost '</span> IDENTIFIED BY <span class="string">'password'</span>；</span><br></pre></td></tr></table></figure>
-
-<p>注：不要漏掉分号，name处填入你想要创建的账户名，password处填入该账户的密码，一下所有账号名都用name来代替，请根据自己实际情况进行修改<br>出现Query OK说明创建成功，没出现说明输入的命令有问题，再检查一遍<br>然后输入下面的命令来授予我们的用户最高权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant all privileges on *.* to name@localhost;</span><br></pre></td></tr></table></figure>
-
-<p>如果想要撤销权限的话就输入下列命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">revoke all privileges on *.* form name@localhost;</span><br></pre></td></tr></table></figure>
-
-<p>最后记得刷新一下权限信息，否则在之后会出现错误</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
-
-<p>然后就可以输入exit退出了<br>之后打开浏览器输入网址进入phpmyadmin,用之前创建的用户名和密码进行登录，就会发现已经拥有全部权限了<br><img src="https://img-blog.csdnimg.cn/20200731224049387.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt="点击图中红框处即可重新登录"><br>至此LNMP四件套都已安装配置完成！</p>
-<h2 id="2-安装wordpress"><a href="#2-安装wordpress" class="headerlink" title="2.安装wordpress"></a>2.安装wordpress</h2><p>打开树莓派浏览器，输入wordpress.org,在官网中进行下载，也可以获取下载链接，在控制台中使用wget命令直接进行下载，如果在树莓派内下载速度缓慢，可以先在PC上将压缩包下载下来，再传到树莓派上。<br>下载完成后将文件解压至<strong>/var/www/html</strong>处，你也可以将解压后的文件重命名，比如我将文件重命名为blog，然后还需要输入下列命令给文件赋予权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 777 /var/www/html/blog</span><br></pre></td></tr></table></figure>
-
-<p>之后你需要给你的网站创建一个数据库，打开树莓派浏览器进入phpmyadmin，点数据库，输入数据库名就可以直接点创建了<br><img src="https://img-blog.csdnimg.cn/20200731224111705.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt=""></p>
-<p>之后输入<strong>你的树莓派IP/文件名</strong>，以我的为例就是168.192.1.100/blog,然后会出现欢迎界面，点击开始即可，然后会让你填写一些基本信息，用户名和密码为你登录phpmyadmin时的用户名和密码，数据库主机填为你的树莓派IP地址，表前缀不需要进行更改。<br>然后会跳转到一个新的页面，按照提示填写信息即可，完成之后进行登录，出现下图即说明大功告成啦！<br><img src="https://img-blog.csdnimg.cn/2020073122425525.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt=""><br>然后你可以自己更换网站的外观，或者使用插件来美化自己的网站，all up to you！<br>当然你也可以在同一局域网下使用其他设备来访问你的网站，如果希望自己的网站能被当前局域网以外的网络（即外网）访问的话，推荐新手使用花生壳进行内网穿透，花生壳官方也有十分详细的教程，这篇文章就不过多的涉及了。</p>
-<h2 id="3-问题及解决方法"><a href="#3-问题及解决方法" class="headerlink" title="3.问题及解决方法"></a>3.问题及解决方法</h2><p>（1）同一局域网下其他设备无法正常显示网站页面</p>
-<p>检查一下设置，将这两处改为你的树莓派的IP地址/文件名即可，如果你wordpress的文件夹换了位置或者重命名了也需要修改此处<br><img src="https://img-blog.csdnimg.cn/2020073122433231.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<p>（2）下载主题或者插件时显示未能连接到FTP服务器<br><img src="https://img-blog.csdnimg.cn/20200731224348894.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt=""></p>
-<p>如果出现上诉错误提示，在控制台输入</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install vsftpd        <span class="comment">#安装ftpd服务</span></span><br></pre></td></tr></table></figure>
-
-<p>安装成功后，ftpd就已经可以登录和浏览文件了，但是不能写，需要更改写权限。<br>更改权限需要</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
-
-<p>然后输入两遍密码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo --unlock root           <span class="comment">#解锁root用户</span></span><br></pre></td></tr></table></figure>
-
-<p>然后再输入su，输入刚刚的密码，进入root用户</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/vsftpd.conf</span><br></pre></td></tr></table></figure>
-
-<p>去掉write_enable=YES前面的#，保存退出</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service vsftpd restart         <span class="comment">#重启服务</span></span><br></pre></td></tr></table></figure>
-
-<p>之后再重启树莓派即可<br>之后再下载主题即可，FTP用户名和密码为树莓派的用户名和密码，默认为pi和raspberry<br>如果进行了以上操作还是无法下载主题的话，可以先在PC上将主题下载下来，再传到树莓派中，解压放在<strong>/var/www/html/blog/wp-content/thems</strong>中即可。</p>
-<h2 id="4-one-more-things"><a href="#4-one-more-things" class="headerlink" title="4.one more things"></a>4.one more things</h2><p>博客建完之后就完了？我在开头就讲过wordpress还可以做其他网站，所以，我们还可以使用wordpress搭建一个简易的树莓派资源监控网站，这也是我即便是后来使用hexo搭完博客之后还留着wordpress的原因。<br>而这个网站搭建起来也十分的简单，因为难的部分别人都帮我们做好了，我们只需要在github上clone下来使用就好了。<br>首先我们需要安装git，一般来说Raspbian里内置有git，如果没有的话使用一下命令来进行安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install git</span><br></pre></td></tr></table></figure>
-
-<p>然后我们需要把我们的目录设定在网站的根目录下</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /var/www/html/</span><br></pre></td></tr></table></figure>
-
-<p>然后使用git工具将github上的开源项目pi dashboard给clone下来并赋予权限</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo git <span class="built_in">clone</span> https://github.com/spoonysonny/pi-dashboard.git</span><br><span class="line">sudo chown-R www-data pi-dashboard      <span class="comment">#为pi dashboard赋予权限</span></span><br></pre></td></tr></table></figure>
-
-<p>打开浏览器，输入<strong>你的树莓派IP/dashboard</strong>，即可看到树莓派的资源使用情况<br><img src="https://img-blog.csdnimg.cn/2020073122440817.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NTgyNTYzNQ==,size_16,color_FFFFFF,t_70" alt=""></p>
-
+<h2 id="1-安装LNMP四件套"><a href="#1-安装LNMP四件套" class="headerlink" title="1.安装LNMP四件套"></a>1.安装LNMP四件套</h2>
+        
+          <a class="article-more-a" href="/2020/07/31/%E6%A0%91%E8%8E%93%E6%B4%BE-wordpress%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5-%E5%8D%9A%E5%AE%A2/#more">继续阅读 >></a>
+        
       
 
       
@@ -275,10 +201,6 @@
 
       
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/31/%E6%A0%91%E8%8E%93%E6%B4%BE-wordpress%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5-%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
-        </p>
       
 
       
@@ -345,10 +267,6 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/18/Hello%20World/">展开全文 >></a>
-        </p>
-      
 
       
       <div class="clearfix"></div>
@@ -395,17 +313,6 @@
       	</div>
     </div>
   </div>
-
-    <!-- 不蒜子统计 -->
-    <span id="busuanzi_container_site_pv">
-            本站总访问量<span id="busuanzi_value_site_pv"></span>次
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span id="busuanzi_container_site_uv" style='display:none'>
-            本站访客数<span id="busuanzi_value_site_uv"></span>人
-    </span>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
-    </script>
 
 </footer>
 
