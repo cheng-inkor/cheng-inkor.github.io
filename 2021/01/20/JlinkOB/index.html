@@ -6,25 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://inkor.xyz">
-  <title>JlinkOB | Inkor|墨客的个人站</title>
+  <title>Typec接口的迷你Jlink | Inkor|墨客的个人站</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="0.引言此次的项目为一个自制的JlinkOB，相信大部分玩过stm32的同学应该都用过，淘宝上也有很多成熟的成品了，而且除了jlinkob还有stlink，daplink之类的烧录器，价格也都非常的亲民，那我为什么还有自己做一个呢？主要原因有以下两点，第一点是由于我做的项目经常需要使用到jscope，到目前为止我也没找到比它更方便的观察变量数据曲线变化的软件了，而这个软件只能配合jlink使用，第">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JlinkOB">
+<meta property="og:title" content="Typec接口的迷你Jlink">
 <meta property="og:url" content="http://inkor.xyz/2021/01/20/JlinkOB/index.html">
 <meta property="og:site_name" content="Inkor|墨客的个人站">
 <meta property="og:description" content="0.引言此次的项目为一个自制的JlinkOB，相信大部分玩过stm32的同学应该都用过，淘宝上也有很多成熟的成品了，而且除了jlinkob还有stlink，daplink之类的烧录器，价格也都非常的亲民，那我为什么还有自己做一个呢？主要原因有以下两点，第一点是由于我做的项目经常需要使用到jscope，到目前为止我也没找到比它更方便的观察变量数据曲线变化的软件了，而这个软件只能配合jlink使用，第">
 <meta property="og:locale" content="cn">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-b52f793fc1b84db3eb1eca8b8d09bb81_720w.jpg">
-<meta property="og:image" content="https://pic1.zhimg.com/80/v2-fc7ea6fc48c8db0eb932e6d20328d408_720w.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-02cbc7c8c68b619bb8a51beadfa446b2_720w.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-b52f793fc1b84db3eb1eca8b8d09bb81_720w.jpg">
 <meta property="og:image" content="https://pic3.zhimg.com/80/v2-f6142b0cc0caea26c10e704185c20e3a_720w.jpg">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-da1af2ca8d36ab1f02411b423ffd3118_720w.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-33c5133173d1bcebbee144394c43e741_720w.jpg">
 <meta property="article:published_time" content="2021-01-20T12:11:13.000Z">
-<meta property="article:modified_time" content="2021-01-20T13:50:02.363Z">
+<meta property="article:modified_time" content="2021-01-21T12:01:22.282Z">
 <meta property="article:author" content="墨客的个人站">
-<meta property="article:tag" content="开源项目">
+<meta property="article:tag" content="项目">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-b52f793fc1b84db3eb1eca8b8d09bb81_720w.jpg">
   
@@ -171,7 +171,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      JlinkOB
+      Typec接口的迷你Jlink
     </h1>
   
 
@@ -189,7 +189,12 @@
         <h2 id="0-引言"><a href="#0-引言" class="headerlink" title="0.引言"></a>0.引言</h2><p>此次的项目为一个自制的JlinkOB，相信大部分玩过stm32的同学应该都用过，淘宝上也有很多成熟的成品了，而且除了jlinkob还有stlink，daplink之类的烧录器，价格也都非常的亲民，那我为什么还有自己做一个呢？主要原因有以下两点，第一点是由于我做的项目经常需要使用到jscope，到目前为止我也没找到比它更方便的观察变量数据曲线变化的软件了，而这个软件只能配合jlink使用，第二点就是都已经2021年了，市面上出售的jlinkob都是microusb接口的，我个人也是非常推崇typec接口，而且现在安卓手机的充电口基本上都是typec接口，很容易就能找到，基于以上两点，我就自制了typec接口的jlinkob，同时也集成了CDC（虚拟串口）功能。同时这也是我学了画PCB之后的第一个项目，所以有一些小问题是在所难免的，未来也会将改进版开源出来。<br>开源地址：<br><a href="https://github.com/cheng-inkor/JlinkOB" target="_blank" rel="noopener">https://github.com/cheng-inkor/JlinkOB</a><br>​</p>
 <h2 id="1-硬件部分"><a href="#1-硬件部分" class="headerlink" title="1.硬件部分"></a>1.硬件部分</h2><p>V1.0<br><img src="https://pic2.zhimg.com/80/v2-b52f793fc1b84db3eb1eca8b8d09bb81_720w.jpg" alt="V1.0"></p>
 <a id="more"></a>
-<p>这是第一版的原理图，非常的简单，LDO采用的是AMS-1117,画原理图的时候没考虑太多，正好实验室有这种LDO就用了，在第二版的时候就把LDO换成了662K，也就是很多最小系统板上的LDO，体积要比AMS-1117小很多。需要注意的是USBD+接的上拉电阻一般是1.5K，当然选用2K也是没有问题的(本人目前没发现任何问题，如有懂的大佬可以评论区告诉我)，还有就是CC1和CC2接下拉电阻是为了满足C to C数据线的握手协议，否则使用C to C的数据线时电脑无法向JlinkOB输出5V电压，当然如果使用的是A to C的数据线的话接不接下拉电阻都是没有影响的。由于第一次开板，为防止需要通过串口下载固件，我将BOOT0引了出来，大家在实际打板的时候可以进行修改。<br>V2.0<br><img src="https://pic1.zhimg.com/80/v2-fc7ea6fc48c8db0eb932e6d20328d408_720w.jpg" alt="V2.0"><br>在第一版开出来并测试没问题之后我就开始准备第二版了，主要的改进部分就是将LDO从AMS-1117换成了662K，同时去掉了一个LED，体积比V1.0小了一圈，达到了我的要求，但是我烧完固件之后电脑无法识别它，换成V1.0的电脑又能正常识别到，我对比了两版的原理图，也没找到问题出在哪，如果有大佬知道问题出在哪的话还请在评论区指出。<br><img src="https://pic2.zhimg.com/80/v2-b52f793fc1b84db3eb1eca8b8d09bb81_720w.jpg" alt=""><br>对比一下V1.0和V2.0的大小<br><img src="https://pic3.zhimg.com/80/v2-f6142b0cc0caea26c10e704185c20e3a_720w.jpg" alt="从上到下依次为TB购买的成品，V1.0，V2.0"><br>从上到下依次为TB购买的成品，V1.0，V2.0<br>这款Jlink的具体演示效果可以看我上传到b站的视频​<br>space.bilibili.com</p>
+<p>这是第一版的原理图，非常的简单，LDO采用的是AMS-1117,画原理图的时候没考虑太多，正好实验室有这种LDO就用了，在第二版的时候就把LDO换成了662K，也就是很多最小系统板上的LDO，体积要比AMS-1117小很多。需要注意的是USBD+接的上拉电阻一般是1.5K，当然选用2K也是没有问题的(本人目前没发现任何问题，如有懂的大佬可以评论区告诉我)，还有就是CC1和CC2接下拉电阻是为了满足C to C数据线的握手协议，否则使用C to C的数据线时电脑无法向JlinkOB输出5V电压，当然如果使用的是A to C的数据线的话接不接下拉电阻都是没有影响的。由于第一次开板，为防止需要通过串口下载固件，我将BOOT0引了出来，大家在实际打板的时候可以进行修改。<br>V2.0<br><img src="https://pic3.zhimg.com/80/v2-02cbc7c8c68b619bb8a51beadfa446b2_720w.jpg" alt="V2.0"><br>在第一版开出来并测试没问题之后我就开始准备第二版了，主要的改进部分就是将LDO从AMS-1117换成了662K，同时去掉了一个LED，体积比V1.0小了一圈，达到了我的要求，于此同时为了使绿灯和蓝灯在工作时的亮度达到一致，我将R6由原来的1K改为了620R，但是我烧完固件之后电脑无法识别它，换成V1.0的电脑又能正常识别到，我对比了两版的原理图，也没找到问题出在哪，如果有大佬知道问题出在哪的话还请在评论区指出。<strong>（问题已解决，是芯片烧了，同时我也试了HK32和APM32，发现电脑也是无法识别，GD32据说可以，但我没试过，感兴趣的朋友可以试试）</strong><br><img src="https://pic2.zhimg.com/80/v2-b52f793fc1b84db3eb1eca8b8d09bb81_720w.jpg" alt=""><br>对比一下V1.0和V2.0的大小<br><img src="https://pic3.zhimg.com/80/v2-f6142b0cc0caea26c10e704185c20e3a_720w.jpg" alt="从上到下依次为TB购买的成品，V1.0，V2.0"><br>从上到下依次为TB购买的成品，V1.0，V2.0<br>这款Jlink的具体演示效果可以看我上传到b站的视频​</p>
+
+<div style="position: relative; width: 100%; height: 0; padding-bottom: 75%;">
+<iframe src="//player.bilibili.com/player.html?aid=586335989&bvid=BV1rz4y1S7N1&cid=285103318&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="position: absolute; width: 100%; height: 100%; Left: 0; top: 0;" ></iframe></div>
+
+
 <h2 id="2-固件烧录"><a href="#2-固件烧录" class="headerlink" title="2.固件烧录"></a>2.固件烧录</h2><p>固件我也上传到了github上，下面演示一下如何进行烧录，首先你的电脑中要有jlink的驱动，如果没有的话百度搜索安装就行了，没啥可讲的。安装好之后搜索jflash<br><img src="https://pic1.zhimg.com/80/v2-da1af2ca8d36ab1f02411b423ffd3118_720w.jpg" alt=""><br>打开之后选择创建新项目，将目标板选为stm32f103c8t6即可(如果使用的芯片是国产的话大概率是无法找到直接对应的芯片，选择其内核类型即可，如hk32f103c8t6选cortex-m3即可)<br><img src="https://pic2.zhimg.com/80/v2-33c5133173d1bcebbee144394c43e741_720w.jpg" alt=""><br>然后选择左上角file-open data file,选择固件，起始地址选为0x8000000即可，之后点击上方的Target-Connect，下方提示Connected successfully说明连接成功，再点击Target-Production Programming就完成了烧录，将JlinkOB重新插拔一次就能正常使用了。</p>
 
       
@@ -235,7 +240,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">开源项目</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
         		</li>
       		
 		</ul>
@@ -474,7 +479,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">开源项目</a>
+                <a href="javascript:void(0)" class="js-tag color3">项目</a>
               </li>
             
             <div class="clearfix"></div>
