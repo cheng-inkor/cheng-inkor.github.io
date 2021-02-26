@@ -154,6 +154,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Power-X" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/02/26/Power-X/">Power_X</a>
+    </h1>
+  
+
+        
+        
+<a href="/2021/02/26/Power-X/" class="archive-article-date">
+  	<time datetime="2021-02-26T13:52:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-02-26</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>作为一名数码爱好者，一直想拥有一个USB电流表，但无奈被Power-Z的价格劝退，转念一想，不如自己做个USB电流表，既能满足自己的需求，也是一个学习的过程，<del>顺便还能水一期视频</del>，于是就有了本篇文章。并且由于这个项目是为了代替power-z而产生的，所以干脆将其命名了Power_X。</p>
+<p>此项目的软硬件部分已全部开源，开源地址：<a href="https://github.com/cheng-inkor/Power_X" target="_blank" rel="noopener">https://github.com/cheng-inkor/Power_X</a></p>
+<h1 id="硬件部分"><a href="#硬件部分" class="headerlink" title="硬件部分"></a>硬件部分</h1><p>虽然我是typec接口的坚定推崇者，但无奈如今的大环境下仍然还是有着大量的USB-A接口，而且大部分数码产品的线材也是A to C的，所以此次的接口除了两个C口之外还加了两个A口，这也导致没法将其体积压缩到极致</p>
+<p>下图是PCB的原理图和PCB图，如果看不清楚的话可以去开源地址把完整的工程下载下来<br><img src="https://pic1.zhimg.com/80/v2-d3d522468ec01ea6d5297a293f2e0724_720w.jpg" alt="原理图"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-b63d7a572f7cd15629a2007a40fdea58_720w.jpg" alt="PCB图"><br>下面依次介绍一下IC芯片的选型：</p>
+<p>主控使用的是STM32F103C8T6，性能完全是够用了，甚至有点大材小用了，但是我其实更加推荐使用GD32F103C8T6，主要因为ST芯片价格涨的太离谱了，而国产的GD芯片价格就要低不少，至于质量的话虽说目前不如ST家的，但做这个项目的主控还是绰绰有余的，毕竟power-z的主控也是GD家的，至于GD芯片的开发就更不用担心了，和STM32基本是一样的。</p>
+<p>AD采集芯片使用的是INA226，和power-z上使用的是同款芯片。</p>
+<p>LDO采用的是HT7533，没有采用662K的主要原因是HT7533能承受的最大电压是30V，而662K仅为6V，如今大部分的数码产品都支持快充，充电电压达到9V，12V都十分常见了，不过最好还是使用DC-DC芯片进行降压，不过我图省事就直接使用HT7533了。</p>
+<p>EEPROM采用的是AT24C256C，可以储存自定义的设置和数据。</p>
+<p>本来还想加PD&amp;QC诱骗电路，但马上就要开学了，事情也多了起来，就暂时没加，以后有时间再加上，所以此USB电流表没有检测充电协议的功能，但也不会影响到原来的充电协议。</p>
+<p>PCB画好之后渲染了一下模型，感觉还不错，就拿去打样板了。为了能节省一次嘉立创5元打板的机会，我将上下两层PCB放在一起，中间连接部分不进行铺铜处理，到手之后直接掰开，用砂纸将断裂处打磨一下即可。<br><img src="https://pic1.zhimg.com/80/v2-a09dfc4743e37cc926b5ca37b56b5fe0_720w.jpg" alt="渲染图"><br>比较有意思的是，我复用的连接上下两层PCB的四个铜柱，这四个铜柱分别作为电源的正和负，I2C总线的时钟线和数据线，所以在通电使用的时候千万不要把它放置在导电的材料上，否则电源短路你懂的……</p>
+<h1 id="软件部分"><a href="#软件部分" class="headerlink" title="软件部分"></a>软件部分</h1><p>代码部分的话其实没啥可说的，毕竟我也就只写了个简单的demo进行用于测试，经测试能够通过I2C正常读取INA226的数据并显示在oled上，值得说明的是，该工程的代码我是先使用STM32CubeMX生成GCC代码，然后在VScode中进行编译烧录的，所以无法使用keil5打开此工程，为了方便大家烧录，我将代码编译后生成的hex和bin文件单独拎了出来，所以各位可以直接烧录这两个文件中的任意一个。</p>
+<h1 id="实物展示"><a href="#实物展示" class="headerlink" title="实物展示"></a>实物展示</h1><p><img src="https://pic2.zhimg.com/80/v2-140c3f41b6c6f6a60bb7ae024aa08cd9_720w.jpg" alt=""><br><img src="https://pic1.zhimg.com/80/v2-f70994809d946ac41f19395457c94e10_720w.jpg" alt=""><br><img src="https://pic3.zhimg.com/80/v2-605a19b634ad2b858691fe35ab836dde_720w.jpg" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">项目</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/02/26/Power-X/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-JlinkOB" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
